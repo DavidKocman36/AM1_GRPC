@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package model;
+
+option java_multiple_files = true;
+option java_package = "cz.cvut.fit.niam1.grpc.model";
+option java_outer_classname = "FlightsBookingProto";
+
+import "google/protobuf/empty.proto";
+
+service FlightBookingService {
+    rpc getFlightBookings (google.protobuf.Empty) returns (Bookings) {
+    }
+
+    rpc deleteFlightBookings (BookingsDeleteRequest) returns (BookingsResponse) {
+    }
+
+    rpc createFlightBookings (BookingsCreateRequest) returns (BookingsResponse) {
+    }
+
+    rpc updateFlightBookings (BookingsUpdateRequest) returns (BookingsResponse) {
+    }
+}
+
+message BookingsDeleteRequest {
+    string id = 1;
+}
+
+message BookingsCreateRequest {
+    string passenger = 1;
+    string departureAirport = 2;
+    string arrivalAirport = 3;
+    string departureDate = 4;
+    string arrivalDate = 5;
+}
+
+message BookingsUpdateRequest {
+  string id = 1;
+  optional string passenger = 2;
+  optional string departureAirport = 3;
+  optional string arrivalAirport = 4;
+  optional string departureDate = 5;
+  optional string arrivalDate = 6;
+}
+
+message BookingsResponse {
+    string code = 1;
+    string message = 2;
+}
+
+message Booking {
+  string id = 1;
+  Passenger passenger = 2;
+  string departureAirport = 3;
+  string arrivalAirport = 4;
+  string departureDate = 5;
+  string arrivalDate = 6;
+}
+
+message Bookings {
+    repeated Booking booking = 1;
+}
+
+message Airport{
+    string name = 1;
+    repeated Dates departureTimes = 2;
+    repeated Dates arrivalTimes = 3;
+}
+
+message Dates {
+    string name = 1;
+    string date = 2;
+}
+
+message Passenger{
+    string name = 1;
+}
